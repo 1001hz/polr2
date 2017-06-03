@@ -1,0 +1,4 @@
+export class LeagueConfig {
+  public static mediaTypes = ['Album', 'Track'];
+  public static frequencyValues = [1,2,3,4,5,6,7,8,9];
+}
