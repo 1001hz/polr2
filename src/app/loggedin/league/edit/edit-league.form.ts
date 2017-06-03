@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LeagueService } from '../../../services';
 import { LeagueConfig } from '../league.config';
 import { League } from '../../../models/league.model';
-import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs/Rx'
 
 @Component({
@@ -77,7 +76,10 @@ export class EditLeagueForm implements OnDestroy {
 
     route.params.subscribe( params => {
 
-      this.league$ = this.leagueService.getById(params['leagueId']).subscribe( (league: League) => {
+      this.league$ = this.leagueService
+        .getById(params['leagueId'])
+        .first()
+        .subscribe( (league: League) => {
 
         this.league = league;
         this.hasStarted = league.hasStarted();
@@ -114,7 +116,7 @@ export class EditLeagueForm implements OnDestroy {
   onSubmit(leagueData: any) {
     this.serverError = null;
     leagueData._id = this.league._id;
-    console.log(leagueData);
+
     this.leagueService.modify(leagueData)
       .subscribe(
       ( league ) => this.router.navigate(['app/league/'+league._id]),

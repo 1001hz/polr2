@@ -5,7 +5,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'date-picker',
   template: `
-    <input type="text" id="date" value="{{dateValue}}">
+    <input type="text" id="date" [(ngModel)]="dateValue" (blur)="changeIt()" [disabled]="isDisabled">
     <div (click)="changeIt()">Change</div>
   `,
   providers: [
@@ -19,15 +19,17 @@ import * as moment from 'moment';
 export class DatePickerComponent implements ControlValueAccessor {
 
   private dateValue;
+  private isDisabled;
+
+  constructor() {
+    this.isDisabled = false;
+  }
 
   writeValue(value: any) {
-    if(!value){
-      this.dateValue = moment();
-    }
-    else{
-      this.dateValue = moment(parseInt(value)).format('YYYY-MM-DD');
-    }
 
+    if(value){
+      this.dateValue = moment(parseInt(value)).format('DD/MM/YYYY');
+    }
   }
 
   propagateChange = (_: any) => {};
@@ -38,11 +40,14 @@ export class DatePickerComponent implements ControlValueAccessor {
 
   registerOnTouched() {}
 
-  setDisabledState() {}
+  setDisabledState() {
+    this.isDisabled = true;
+  }
 
 
   changeIt() {
-    this.dateValue++;
-    this.propagateChange(this.dateValue);
+    var d = moment(this.dateValue, 'DD/MM/YYYY').format('x');
+    console.log(this.dateValue, d);
+    this.propagateChange(d);
   }
 }

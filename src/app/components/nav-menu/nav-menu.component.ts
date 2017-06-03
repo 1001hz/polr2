@@ -16,7 +16,7 @@ import { Observable } from 'rxjs/Rx';
         Signup
       </a>
       <div *ngIf="(user | async)?._id">
-        <a [routerLink]=" ['./app'] "
+        <a [routerLink]=" ['./app/league'] "
           routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
           Home
         </a>

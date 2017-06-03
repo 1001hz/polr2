@@ -47,8 +47,6 @@ export class LeagueService {
 
   modify(leagueFormData): any {
 
-    leagueFormData.startDate = moment(leagueFormData.startDate + "T00:00:00", "YYYY-MM-DD").format("x");
-
     return this.apiService.apiPut('/api/league', leagueFormData, true)
       .map((response) => {
         let newLeague = new League();

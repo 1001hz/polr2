@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Rx';
     <h2>Leagues</h2>
     <ul>
       <li *ngFor="let league of leagues$ | async">
-        <a routerLink="./league/{{league._id}}"
+        <a routerLink="./{{league._id}}"
           routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
           {{ league.name }}
         </a>

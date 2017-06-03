@@ -18,7 +18,7 @@ export class League {
     this._id = response._id;
     this.name = response.name ? response.name : '';
     this.ownerId = response.ownerId ? response.ownerId : '';
-    this.startDate = response.startDate ? response.startDate : moment().format('x');
+    this.startDate = response.startDate ? response.startDate : '';
     this.frequency = response.frequency ? response.frequency : '';
     this.mediaType = response.mediaType ? response.mediaType : '';
 
@@ -26,7 +26,9 @@ export class League {
   }
 
   hasStarted() {
-    return moment().isAfter(this.startDate);
+    var sd = moment(parseInt(this.startDate)).format('YYYY-MM-DD');
+    var now = moment().format('YYYY-MM-DD');
+    return moment(now).isAfter(sd);
   }
 
 }
