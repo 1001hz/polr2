@@ -12,9 +12,10 @@ import { Observable } from 'rxjs/Rx';
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         Edit {{ (league$ | async).name }}
       </a>
-  </div>
+    </div>
+
     <div>
-    Next round closing:
+    Next round closing: {{ (league$ | async).clientProps.nextRoundClosing }} ({{ (league$ | async).clientProps.nextRoundClosingIn }})
     </div>
   `
 })

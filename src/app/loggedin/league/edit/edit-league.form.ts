@@ -17,14 +17,12 @@ import { Observable, Subscription } from 'rxjs/Rx'
         <span *ngIf="editLeagueForm.controls['name'].hasError('required') && editLeagueForm.controls['name'].touched">Required field</span>
       </div>
 
-      <date-picker formControlName="startDate"></date-picker>
-<!--
       <div class="form__group form__group--input">
         <label for="startDate">Start Date</label>
-        <input type="date" id="startDate" [formControl]="editLeagueForm.controls['startDate']">
+        <date-picker formControlName="startDate"></date-picker>
         <span *ngIf="editLeagueForm.controls['startDate'].hasError('required') && editLeagueForm.controls['startDate'].touched">Required field</span>
       </div>
--->
+
       <div class="form__group form__group--input">
         <label for="frequency">Round Frequency (Weeks)</label>
 

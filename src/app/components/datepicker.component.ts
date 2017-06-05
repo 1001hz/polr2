@@ -6,7 +6,6 @@ import * as moment from 'moment';
   selector: 'date-picker',
   template: `
     <input type="text" id="date" [(ngModel)]="dateValue" (blur)="changeIt()" [disabled]="isDisabled">
-    <div (click)="changeIt()">Change</div>
   `,
   providers: [
     {
@@ -47,7 +46,6 @@ export class DatePickerComponent implements ControlValueAccessor {
 
   changeIt() {
     var d = moment(this.dateValue, 'DD/MM/YYYY').format('x');
-    console.log(this.dateValue, d);
     this.propagateChange(d);
   }
 }

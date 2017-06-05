@@ -8,7 +8,7 @@ export class League {
   public startDate: any;
   public frequency: number;
   public mediaType: string;
-  public nextRoundClosing: string;
+  public clientProps: Object;
 
   constructor() {
   }
@@ -22,10 +22,29 @@ export class League {
     this.frequency = response.frequency ? response.frequency : '';
     this.mediaType = response.mediaType ? response.mediaType : '';
 
-    //this.nextRoundClosing = moment(this.startDate).add(this.frequency,'weeks');
+    this.clientProps = {
+      currentRoundNumber: this._getRound(),
+      nextRoundClosing: this._getNextRoundClosing(),
+      nextRoundClosingIn: this._getNextRoundClosingIn()
+    };
   }
 
-  hasStarted() {
+  _getRound(): number {
+    var mStart = moment(parseInt(this.startDate));
+    var mToday = moment();
+    return mToday.diff(mStart, 'weeks') / this.frequency;
+  }
+
+  _getNextRoundClosing() {
+    var roundNumber = this._getRound();
+    return moment(parseInt(this.startDate)).add(((roundNumber + 1) * this.frequency),'weeks');
+  }
+
+  _getNextRoundClosingIn() {
+    return this._getNextRoundClosing().fromNow();
+  }
+
+  hasStarted(): boolean {
     var sd = moment(parseInt(this.startDate)).format('YYYY-MM-DD');
     var now = moment().format('YYYY-MM-DD');
     return moment(now).isAfter(sd);
