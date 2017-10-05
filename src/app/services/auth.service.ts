@@ -27,7 +27,7 @@ export class AuthService {
 
   tokenLogin(token) {
 
-    return this.apiService.apiPost('/api/token-login', {"token": token}, false)
+    return this.apiService.apiPost('/api/login/token', {"token": token}, false)
       .map((response) => {
 
         // create user object
@@ -67,7 +67,7 @@ export class AuthService {
 
   logout(): any {
 
-    return this.apiService.apiGet('/api/user/logout', true)
+    return this.apiService.apiGet('/api/logout', true)
       .map((response) => {
         this.store.dispatch({ type: RESET_USER });
 
@@ -81,7 +81,7 @@ export class AuthService {
   signup(userCredentials): any {
 
     return this.apiService
-      .apiPost('/api/open/user', userCredentials, false)
+      .apiPost('/api/user', userCredentials, false)
       .map((response) => {
 
         // create user object
@@ -98,7 +98,7 @@ export class AuthService {
 
   forgotPassword(email): any {
     return this.apiService
-      .apiPost('/api/forgot-password', {email: email}, false)
+      .apiPost('/api/password/forgot', {email: email}, false)
       .map((response) => {
         this.messageService.success(response.message);
       })
@@ -107,7 +107,7 @@ export class AuthService {
 
   resetPassword(key, email, password): any {
     return this.apiService
-      .apiPost('/api/reset-password', {token: key, email: email, password: password}, false)
+      .apiPost('/api/password/reset', {token: key, email: email, password: password}, false)
       .map((response) => {
         this.messageService.success(response.message);
       })

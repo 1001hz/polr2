@@ -22,7 +22,7 @@ export class UserService {
   update(user: User) {
 
     return this.apiService
-      .apiPost('/api/user', user, true)
+      .apiPatch('/api/user', user, true)
       .map((response) => {
 
         // create user object
@@ -40,7 +40,7 @@ export class UserService {
   changePassword(currentPassword: string, newPassword: string) {
 
     return this.apiService
-      .apiPost('/api/user/password', { "current": currentPassword, "new": newPassword }, true)
+      .apiPut('/api/user/password', { "current": currentPassword, "new": newPassword }, true)
       .map((response) => {
         this.messageService.success("Password has been updated.");
       })

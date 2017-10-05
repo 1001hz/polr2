@@ -6,4 +6,5 @@ import { Component } from '@angular/core';
     <join-league-form></join-league-form>
   `
 })
-export class JoinLeagueComponent{}
+export class JoinLeagueComponent{
+}

@@ -6,7 +6,7 @@ import { Message } from '../models/message.model';
   selector: 'message',
   template: `
     <ul>
-      <li *ngFor="let message of messages">{{ message.text }}</li>
+      <li *ngFor="let message of messages" class="alert alert-success" role="alert">{{ message.text }}</li>
     </ul>
   `
 })

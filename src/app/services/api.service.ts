@@ -80,6 +80,24 @@ export class ApiService {
       .map((res:Response) => res.json())
   }
 
+  apiPatch(endpoint, data, isPrivate:boolean = true) {
+
+    this.headers = new Headers({ 'Content-Type': 'application/json' });
+    if(isPrivate && this.token) {
+      // protected routes need token
+      this.headers.append('X-Auth-Token', this.token);
+    }
+
+    let payload = JSON.stringify(data); // Stringify payload
+
+    let options = new RequestOptions({ headers: this.headers });
+
+
+
+    return this.http.patch(this.apiUrl + endpoint, payload, options)
+      .map((res:Response) => res.json())
+  }
+
   apiPostFile(endpoint, formData:FormData) {
     let headers = new Headers();
     //headers.append('Content-Type', 'multipart/form-data');
@@ -89,6 +107,22 @@ export class ApiService {
     return this.http.post(this.apiUrl + endpoint, formData, options)
       .map(res => res.json())
       .catch(error => Observable.throw(error));
+  }
+
+  apiDelete(endpoint, isPrivate:boolean = true) {
+
+    this.headers = new Headers({ 'Content-Type': 'application/json' });
+
+    if(isPrivate && this.token) {
+      // protected routes need token
+      this.headers.append('X-Auth-Token', this.token);
+    }
+
+    let options = new RequestOptions({ headers: this.headers });
+
+    return this.http.delete(this.apiUrl + endpoint, options)
+      .map((res:Response) => res.json())
+      .catch( error => Observable.throw(error.json().message || 'Server error'));
   }
 
 }

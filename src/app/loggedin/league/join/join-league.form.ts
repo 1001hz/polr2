@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LeagueService } from '../../../services';
+import { League } from '../../../models/league.model';
 
 @Component({
   selector: 'join-league-form',
@@ -44,8 +45,12 @@ export class JoinLeagueForm {
     this.serverError = null;
     this.leagueService.joinLeague(value.code)
       .subscribe(
-      ( league ) => this.router.navigate(['app/league/'+league._id]),
-      ( error ) => this.serverError = error
+      ( league ) => {
+        this.router.navigate(['app/league/' + league._id]);
+      },
+      ( error ) => {
+        this.serverError = error;
+      }
     );
   }
 }

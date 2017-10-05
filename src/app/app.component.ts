@@ -19,15 +19,15 @@ import { Router } from '@angular/router';
     './app.component.css'
   ],
   template: `
-    <message></message>
-    <nav-menu></nav-menu>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
 
-    <footer>
-      FOOTER
-    </footer>
+      <message></message>
+      <nav-menu></nav-menu>
+      <main>
+        <div class="container">
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+
   `
 })
 export class AppComponent {

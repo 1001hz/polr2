@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { LeagueService } from '../../../services';
 import { LeagueConfig } from '../league.config';
 import { League } from '../../../models/league.model';
@@ -15,6 +15,12 @@ import { Observable, Subscription } from 'rxjs/Rx'
         <label for="name">Name</label>
         <input type="text" id="name" [formControl]="editLeagueForm.controls['name']">
         <span *ngIf="editLeagueForm.controls['name'].hasError('required') && editLeagueForm.controls['name'].touched">Required field</span>
+      </div>
+
+      <div class="form__group form__group--input">
+        <label for="active">Active</label>
+        <input type="checkbox" id="active" [formControl]="editLeagueForm.controls['active']">
+        <span *ngIf="editLeagueForm.controls['active'].hasError('required') && editLeagueForm.controls['active'].touched">Required field</span>
       </div>
 
       <div class="form__group form__group--input">
@@ -52,7 +58,7 @@ import { Observable, Subscription } from 'rxjs/Rx'
     </form>
   `
 })
-export class EditLeagueForm implements OnDestroy {
+export class EditLeagueForm implements OnDestroy, OnInit {
 
   editLeagueForm: FormGroup;
   public serverError: string;
@@ -61,31 +67,35 @@ export class EditLeagueForm implements OnDestroy {
   public hasStarted: boolean;
   private league: League;
   private league$: Subscription;
+  @Input() leagueId: string;
 
   constructor(
-    fb: FormBuilder,
+    private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,
     private leagueService: LeagueService
   ) {
-
     this.frequencyValues = LeagueConfig.frequencyValues;
     this.mediaTypes = LeagueConfig.mediaTypes;
+  }
 
-    route.params.subscribe( params => {
-
-      this.league$ = this.leagueService
-        .getById(params['leagueId'])
-        .first()
-        .subscribe( (league: League) => {
+  ngOnInit() {
+    this.league$ = this.leagueService
+      .getById(this.leagueId)
+      .first()
+      .subscribe( (league: League) => {
 
         this.league = league;
         this.hasStarted = league.hasStarted();
 
-        this.editLeagueForm = fb.group({
+        this.editLeagueForm = this.fb.group({
           'name': [
             league.name,
-            Validators.required],
+            Validators.required
+          ],
+          'active': [
+            league.active,
+            Validators.required
+          ],
           'startDate': [
             {
               value: league.startDate,
@@ -106,9 +116,6 @@ export class EditLeagueForm implements OnDestroy {
           ]
         });
       });
-
-    });
-
   }
 
   onSubmit(leagueData: any) {

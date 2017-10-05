@@ -7,7 +7,8 @@ import { NEW_LEAGUE_COMPONENTS } from './new';
 import { EDIT_LEAGUE_COMPONENTS } from './edit';
 import { JOIN_LEAGUE_COMPONENTS } from './join';
 import { VIEW_LEAGUE_COMPONENTS } from './view';
-import { HOME_COMPONENTS } from '../home';
+import { PICK_COMPONENTS } from './pick';
+import { LEAGUE_LIST_COMPONENTS } from './list';
 
 import { ROUTES } from './league.routes';
 
@@ -19,7 +20,8 @@ import { DatePickerComponent } from '../../components/datepicker.component';
     ...EDIT_LEAGUE_COMPONENTS,
     ...JOIN_LEAGUE_COMPONENTS,
     ...VIEW_LEAGUE_COMPONENTS,
-    ...HOME_COMPONENTS,
+    ...PICK_COMPONENTS,
+    ...LEAGUE_LIST_COMPONENTS,
     DatePickerComponent
   ],
   imports: [

@@ -9,8 +9,9 @@ import { AuthService } from '../../services';
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
 
       <div class="form__group form__group--input">
-        <label for="email">email</label>
+        <label for="email">Email</label>
         <input type="text" id="email" [formControl]="loginForm.controls['email']">
+
         <span *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">Required field</span>
       </div>
 

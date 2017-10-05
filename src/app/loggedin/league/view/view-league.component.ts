@@ -8,14 +8,33 @@ import { Observable } from 'rxjs/Rx';
   template: `
     <h1>{{ (league$ | async).name }}</h1>
     <div *ngIf="isOwner">
-      <a routerLink="../../league/edit/{{ (league$ | async)._id }}"
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+      <a [routerLink]="['./edit']">
         Edit {{ (league$ | async).name }}
       </a>
     </div>
 
-    <div>
-    Next round closing: {{ (league$ | async).clientProps.nextRoundClosing }} ({{ (league$ | async).clientProps.nextRoundClosingIn }})
+    <div *ngIf="!(league$ | async).active">
+      This league has been deactivated
+    </div>
+
+    <div *ngIf="(league$ | async).source=='spotify'">
+      <link-spotify-form></link-spotify-form>
+    </div>
+
+    <div *ngIf="(league$ | async).active">
+        <div *ngIf="!(league$ | async).clientProps.hasStarted">
+          League starts {{(league$ | async).startDate | date}}
+        </div>
+
+        <div *ngIf="(league$ | async).clientProps.hasStarted">
+        Round {{ (league$ | async).clientProps.currentRoundNumber }} closing: {{ (league$ | async).clientProps.nextRoundClosing }} ({{ (league$ | async).clientProps.nextRoundClosingIn }})
+        </div>
+
+        <div>
+          <button [routerLink]="['./pick']">
+          Pick {{ (league$ | async).mediaType }} for round {{ (league$ | async).clientProps.currentRoundNumber }}</button>
+          <div (click)="pick()">PICK</div>
+        </div>
     </div>
   `
 })

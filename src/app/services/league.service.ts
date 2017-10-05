@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
 import { League } from '../models/league.model';
-import { ADD_LEAGUE, DROP_LEAGUES, MODIFY_LEAGUE } from '../reducers/league.reducer';
+import { ADD_LEAGUE, DROP_LEAGUES, MODIFY_LEAGUE, REMOVE_LEAGUE } from '../reducers/league.reducer';
 import { ApiService } from './api.service';
 import { MessageService } from './message.service';
 import { AuthService } from './auth.service';
@@ -126,6 +126,16 @@ export class LeagueService {
         return league.ownerId === user._id;
       });
 
+  }
+
+  remove(leagueId) {
+    return this.apiService.apiDelete('/api/league/'+leagueId, true)
+      .map(() => {
+        this.store.dispatch({ type: REMOVE_LEAGUE, payload: leagueId });
+        this.messageService.success("You have removed league with ID " + leagueId);
+        return leagueId;
+      })
+      .share();
   }
 
 }
